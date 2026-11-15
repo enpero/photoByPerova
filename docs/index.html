@@ -188,7 +188,7 @@
     [hidden] { display: none !important; }
     .gallery-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: clamp(14px, 2vw, 24px); }
     .filters { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
-    .filter-button, .shuffle-button {
+    .filter-button {
       min-height: 44px;
       padding: 10px 17px;
       border: 1px solid #ffffffc9;
@@ -200,12 +200,12 @@
       -webkit-backdrop-filter: blur(16px);
       backdrop-filter: blur(16px);
     }
-    .filter-button:hover, .shuffle-button:hover { background: #ffffffb3; }
+    .filter-button:hover:hover { background: #ffffffb3; }
     .filter-button[aria-pressed="true"] { background: #f9fdfff0; border-color: #94bdd8; color: #244e6a; box-shadow: inset 0 1px 0 #fff, 0 3px 12px #557e9820; }
-    .filter-button:focus-visible, .shuffle-button:focus-visible { outline: 3px solid #5194c3; outline-offset: 3px; }
-    .shuffle-button { display: inline-flex; align-items: center; gap: 8px; }
-    .shuffle-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; }
-    .shuffle-button:disabled { opacity: .45; cursor: default; }
+    .filter-button:focus-visible:focus-visible { outline: 3px solid #5194c3; outline-offset: 3px; }
+
+
+
     .empty-gallery { padding: 55px 20px; margin: 0; text-align: center; color: #426a85; font: 15px/1.6 system-ui, sans-serif; }
     .view-switch {
       display: flex;
@@ -262,7 +262,7 @@
     .scene { padding: clamp(12px, 3vw, 48px); }
     .glass { min-width: 0; max-width: 1800px; min-height: calc(100svh - clamp(24px, 6vw, 96px)); padding: clamp(12px, 2vw, 28px); }
     .gallery-toolbar, .filters, .gallery, .view-switch { min-width: 0; }
-    .filter-button, .shuffle-button { white-space: nowrap; flex-shrink: 0; }
+    .filter-button { white-space: nowrap; flex-shrink: 0; }
     .view-switch { flex-shrink: 0; }
     .gallery { column-gap: 20px; }
     .frame { margin-bottom: 20px; }
@@ -279,7 +279,8 @@
     @media (max-width: 900px) {
       .gallery-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
       .filters { grid-column: 1 / -1; }
-      .shuffle-button { justify-self: start; }
+      .view-switch { grid-column: 2; justify-self: end; }
+
     }
     @media (max-width: 767px) {
       .scene {
@@ -338,7 +339,6 @@
           <button class="filter-button" type="button" data-filter="people" aria-pressed="false">Люди</button>
           <button class="filter-button" type="button" data-filter="buba" aria-pressed="false">Буба</button>
         </div>
-        <button class="shuffle-button" id="shuffle" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h3c5 0 7 12 12 12h3M17 14l4 4-4 4M3 18h3c2 0 3-2 5-5m2-3c2-3 3-4 5-4h3M17 2l4 4-4 4"/></svg>Перемешать</button>
       <div class="view-switch" role="group" aria-label="Вид галереи">
         <button class="view-button" type="button" data-view="original" aria-label="Исходная раскладка" title="Исходная раскладка" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="11" rx="1"/><rect x="14" y="3" width="7" height="6" rx="1"/><rect x="3" y="18" width="7" height="3" rx="1"/><rect x="14" y="13" width="7" height="8" rx="1"/></svg></button>
         <button class="view-button" type="button" data-view="squares" aria-label="Квадратная сетка" title="Квадратная сетка" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></svg></button>
@@ -403,10 +403,10 @@
     viewButtons.forEach(button => button.addEventListener('click', () => setGalleryView(button.dataset.view)));
     const frames = [...document.querySelectorAll('.frame')];
     const filterButtons = [...document.querySelectorAll('.filter-button')];
-    const shuffleButton = document.getElementById('shuffle');
     const emptyGallery = document.getElementById('empty-gallery');
     let selectedCategory = 'all';
-    let orderedFrames = [...frames];
+    const orderedFrames = shufflePhotos(frames);
+    gallery.append(...orderedFrames);
     let activeFrames = [...frames];
     function matchesCategory(tags, category) {
       return category === 'all' || tags.includes(category);
@@ -417,7 +417,7 @@
         const j = Math.floor(random() * (i + 1));
         [result[i], result[j]] = [result[j], result[i]];
       }
-      // Every click with two or more photos visibly changes their order.
+      // Keep the initial gallery out of upload order, even if the shuffle matches it.
       if (result.length > 1 && result.every((value, i) => value === list[i])) result.push(result.shift());
       return result;
     }
@@ -429,20 +429,11 @@
         button.dataset.filter === selectedCategory
       )));
       emptyGallery.hidden = activeFrames.length !== 0;
-      shuffleButton.disabled = activeFrames.length < 2;
     }
     filterButtons.forEach(button => button.addEventListener('click', () => {
       selectedCategory = button.dataset.filter;
       applyFilters();
     }));
-    shuffleButton.addEventListener('click', () => {
-      const visible = new Set(activeFrames);
-      const shuffled = shufflePhotos(activeFrames);
-      let next = 0;
-      orderedFrames = orderedFrames.map(frame => visible.has(frame) ? shuffled[next++] : frame);
-      gallery.append(...orderedFrames);
-      applyFilters();
-    });
     applyFilters();
     const album = document.getElementById('album');
     const photo = document.getElementById('album-photo');

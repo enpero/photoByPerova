@@ -14,17 +14,20 @@ const frames = [...html.matchAll(/<a class="frame" href="([^"]+)" data-tags="([^
 const gallery = element({ children: [...frames], append(...items) { this.children = items; } });
 const filters = ['all', 'animals', 'nature', 'people', 'buba'].map(filter => element({ dataset: { filter } }));
 const views = ['original', 'squares'].map(view => element({ dataset: { view } }));
-const photo = element(), stage = element(), shuffle = element(), empty = element();
+const photo = element(), stage = element(), empty = element();
 const controls = Object.fromEntries(['.album-close', '.album-prev', '.album-next'].map(k => [k, element()]));
 const album = element({ querySelector: key => controls[key], showModal() { this.open = true; }, close() { this.open = false; this.handlers.close(); } });
-const byId = { album, 'album-photo': photo, 'album-stage': stage, shuffle, 'empty-gallery': empty };
+const byId = { album, 'album-photo': photo, 'album-stage': stage, 'empty-gallery': empty };
 const document = {
   querySelector: () => gallery,
   querySelectorAll: selector => ({ '.frame': frames, '.filter-button': filters, '.view-button': views })[selector],
   getElementById: id => byId[id], documentElement: { classList: { add() {}, remove() {} } }
 };
 const localStorage = { getItem: () => null, setItem() {} };
-vm.runInNewContext(script, { document, localStorage });
+vm.runInNewContext(script, { document, localStorage, Math: Object.assign(Object.create(Math), { random: () => 0.5 }) });
+assert(!html.includes('shuffle-button'));
+assert.notDeepEqual(gallery.children.map(f => f.href), frames.map(f => f.href));
+assert.deepEqual([...gallery.children.map(f => f.href)].sort(), [...frames.map(f => f.href)].sort());
 const peopleCount = frames.filter(f => f.dataset.tags.split(',').includes('people')).length;
 const click = key => filters.find(b => b.dataset.filter === key).handlers.click();
 const visible = () => gallery.children.filter(f => !f.hidden);
@@ -39,16 +42,15 @@ assert.equal(filters.filter(b => b['aria-pressed'] === 'true').length, 1);
 click('people'); assert.equal(visible().length, peopleCount); assert(visible().every(f => f.dataset.tags.split(',').includes('people')));
 click('buba'); assert.equal(visible().length, 6);
 assert.equal(filters.filter(b => b['aria-pressed'] === 'true').length, 1);
-const before = visible().map(f => f.href); shuffle.handlers.click();
-assert.notDeepEqual(visible().map(f => f.href), before);
-assert.deepEqual([...visible().map(f => f.href)].sort(), [...before].sort());
+const before = visible().map(f => f.href); click('nature'); click('buba');
+assert.deepEqual(visible().map(f => f.href), before);
 const ordered = visible();
 ordered[0].handlers.click({ preventDefault() {} }); assert.equal(photo.src, ordered[0].href);
 controls['.album-next'].handlers.click(); assert.equal(photo.src, ordered[1].href);
 controls['.album-prev'].handlers.click(); controls['.album-prev'].handlers.click(); assert.equal(photo.src, ordered.at(-1).href);
 controls['.album-close'].handlers.click(); assert(ordered[0].focused);
 click('buba'); assert.equal(visible().length, 6);
-click('people'); assert.equal(visible().length, peopleCount); assert(visible().every(f => f.dataset.tags.split(',').includes('people'))); assert.equal(empty.hidden, peopleCount !== 0); assert.equal(shuffle.disabled, peopleCount < 2);
+click('people'); assert.equal(visible().length, peopleCount); assert(visible().every(f => f.dataset.tags.split(',').includes('people'))); assert.equal(empty.hidden, peopleCount !== 0);
 click('all'); assert.equal(visible().length, frames.length); assert.equal(empty.hidden, true);
 views[1].handlers.click(); assert.equal(gallery.dataset.view, 'squares');
-console.log('Passed: default, exclusive sections, repeated selection, Buba, shuffle, section album order, empty category and layout switching.');
+console.log('Passed: default, exclusive sections, repeated selection, Buba, automatic shuffle, section album order, empty category and layout switching.');
