@@ -2,7 +2,7 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
 const html = fs.readFileSync('docs/index.html', 'utf8');
-const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
+const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1];
 function element(extra = {}) {
   return { handlers: {}, dataset: {}, hidden: false,
     addEventListener(type, callback) { this.handlers[type] = callback; },

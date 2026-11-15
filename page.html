@@ -83,7 +83,7 @@
         0 25px 90px #739db91c,
         0 4px 18px #83aec511;
     }
-    @media (max-width: 600px) {
+    @container page (max-width: 600px) {
       .scene::before { width: 95vw; top: -5%; right: -40%; }
       .scene::after { width: 90vw; bottom: -10%; left: -40%; }
     }
@@ -103,8 +103,8 @@
     .frame:hover { box-shadow: 0 12px 35px #557e9840; }
     .frame:focus-visible { outline: 3px solid #5194c3; outline-offset: 5px; }
     .frame img { display: block; width: 100%; height: auto; image-orientation: from-image; }
-    @media (max-width: 1000px) { .gallery { columns: 2; } }
-    @media (max-width: 580px) { .gallery { columns: 1; } .frame { border-radius: 14px; } }
+    @container page (max-width: 1000px) { .gallery { columns: 2; } }
+    @container page (max-width: 580px) { .gallery { columns: 1; } .frame { border-radius: 14px; } }
     @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
     html.album-open { overflow: hidden; }
     .album {
@@ -249,10 +249,10 @@
       border-radius: clamp(8px, 1.2vw, 16px);
     }
     .gallery[data-view="squares"] .frame img { width: 100%; height: 100%; object-fit: cover; }
-    @media (max-width: 1000px) {
+    @container page (max-width: 1000px) {
       .gallery[data-view="squares"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
-    @media (max-width: 580px) {
+    @container page (max-width: 580px) {
       .gallery[data-view="squares"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
     /* Responsive shell: phones, tablets and laptop screens. */
@@ -268,21 +268,21 @@
     .frame { margin-bottom: 20px; }
     .album-stage { min-width: 0; min-height: 0; }
     .album-control { z-index: 1; }
-    @media (min-width: 1024px) {
+    @container page (min-width: 1024px) {
       .gallery { columns: 3; }
       .gallery[data-view="squares"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
     }
-    @media (min-width: 768px) and (max-width: 1023px) {
+    @container page (min-width: 768px) and (max-width: 1023px) {
       .gallery { columns: 2; }
       .gallery[data-view="squares"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
-    @media (max-width: 900px) {
+    @container page (max-width: 900px) {
       .gallery-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
       .filters { grid-column: 1 / -1; }
       .view-switch { grid-column: 2; justify-self: end; }
 
     }
-    @media (max-width: 767px) {
+    @container page (max-width: 767px) {
       .scene {
         padding: max(10px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
       }
@@ -356,7 +356,7 @@
     .social-link:hover { background: #ffffffcf; box-shadow: 0 6px 20px #557e9830; }
     .social-link:focus-visible { outline: 3px solid #5194c3; outline-offset: 4px; }
     .social-link svg { width: 22px; height: 22px; }
-    @media (max-width: 767px) {
+    @container page (max-width: 767px) {
       .site-header { gap: 12px; padding-top: 4px; margin-bottom: 18px; }
       .site-title-prefix { font-size: 11px; letter-spacing: .04em; }
       .site-title-name { font-size: 22px; }
@@ -364,8 +364,32 @@
       .social-link { width: 44px; height: 44px; border-radius: 13px; }
       .social-link svg { width: 20px; height: 20px; }
     }
-    @media (max-width: 360px) { .site-title-name { font-size: 20px; } }
+    @container page (max-width: 360px) { .site-title-name { font-size: 20px; } }
     @media (prefers-reduced-motion: reduce) { .social-link { transition: none; } }
+    body { container-name: page; container-type: inline-size; }
+    html[data-device="mobile"] body { width: min(100%, 460px); margin-inline: auto; }
+    html[data-device="desktop"] body { min-width: 1100px; }
+    html[data-device="desktop"], html[data-device="desktop"] body { overflow-x: auto; }
+    .device-toolbar { display: flex; justify-content: flex-end; margin: -4px 0 18px; }
+    .device-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 10px 14px;
+      border: 1px solid #ffffffc9;
+      border-radius: 13px;
+      background: #f3faff80;
+      color: #426a85;
+      font: 13px/1.4 system-ui, sans-serif;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+    .device-toggle:hover { background: #ffffffcf; }
+    .device-toggle:focus-visible { outline: 3px solid #5194c3; outline-offset: 3px; }
+    .device-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+    @container page (max-width: 767px) { .device-toolbar { margin-bottom: 14px; } }
   </style>
 </head>
 <body>
@@ -385,6 +409,12 @@
           </a>
         </nav>
       </header>
+      <div class="device-toolbar">
+        <button class="device-toggle" id="device-toggle" type="button" aria-label="Переключить версию сайта">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 18h4"/></svg>
+          <span id="device-label">Переключить версию</span>
+        </button>
+      </div>
       <div class="gallery-toolbar">
         <div class="filters" role="group" aria-label="Разделы галереи">
           <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Все фото</button>
@@ -442,6 +472,38 @@
     <button class="album-control album-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
     <button class="album-control album-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
   </dialog>
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const viewport = document.querySelector('meta[name="viewport"]');
+      const toggle = document.getElementById('device-toggle');
+      const label = document.getElementById('device-label');
+      const narrowScreen = window.matchMedia('(max-width: 767px)');
+      const normalViewport = 'width=device-width, initial-scale=1, viewport-fit=cover';
+      let mode = null;
+      try {
+        const saved = localStorage.getItem('perova-device-view');
+        if (saved === 'mobile' || saved === 'desktop') mode = saved;
+      } catch {}
+      function updateDevice() {
+        if (mode) root.dataset.device = mode;
+        else delete root.dataset.device;
+        viewport.setAttribute('content', mode === 'desktop'
+          ? 'width=1100, viewport-fit=cover' : normalViewport);
+        const mobile = mode ? mode === 'mobile' : narrowScreen.matches;
+        label.textContent = mobile ? 'Версия для компьютера' : 'Мобильная версия';
+        toggle.setAttribute('aria-label', 'Открыть: ' + label.textContent);
+      }
+      toggle.addEventListener('click', () => {
+        const mobile = mode ? mode === 'mobile' : narrowScreen.matches;
+        mode = mobile ? 'desktop' : 'mobile';
+        try { localStorage.setItem('perova-device-view', mode); } catch {}
+        updateDevice();
+      });
+      narrowScreen.addEventListener('change', () => { if (!mode) updateDevice(); });
+      updateDevice();
+    })();
+  </script>
   <script>
     const gallery = document.querySelector('.gallery');
     const viewButtons = [...document.querySelectorAll('.view-button')];
