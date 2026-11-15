@@ -382,10 +382,10 @@
       .social-link { border-radius: 12px; }
       .social-link svg { width: 18px; height: 18px; }
     }
-    .gallery-intro { max-width: 760px; margin: 0 0 24px; color: #426a85; }
+    .gallery-intro { max-width: 760px; margin: 28px 0 0; padding-top: 24px; border-top: 1px solid #ffffffb8; color: #426a85; }
     .gallery-intro h2 { margin: 0 0 8px; font: 400 clamp(19px, 2.3cqw, 25px)/1.35 Georgia, serif; color: #315975; }
     .gallery-intro p { margin: 0; font: 14px/1.8 system-ui, sans-serif; }
-    @container page (max-width: 767px) { .gallery-intro { margin-bottom: 20px; } .gallery-intro p { font-size: 13px; } }
+    @container page (max-width: 767px) { .gallery-intro { margin-top: 20px; padding-top: 18px; } .gallery-intro p { font-size: 13px; } }
   </style>
 </head>
 <body>
@@ -407,10 +407,6 @@
         </nav>
         </div>
       </header>
-      <section class="gallery-intro" aria-labelledby="gallery-heading">
-        <h2 id="gallery-heading">Фотографии Кипра, природы и котов</h2>
-        <p>Авторская галерея Екатерины Перовой: природа Кипра, морские пейзажи, коты и другие животные, портреты и фотографии из путешествий.</p>
-      </section>
       <div class="gallery-toolbar">
         <div class="filters" role="group" aria-label="Разделы галереи">
           <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Все фото</button>
@@ -497,6 +493,10 @@
         <a class="frame" href="./photos/IMG_9002.JPG" data-tags="nature" aria-label="Открыть: Бурная вода в узком лесном ущелье" aria-haspopup="dialog"><img src="./photos/IMG_9002.JPG" alt="Бурная вода в узком лесном ущелье" width="1124" height="1498" loading="lazy" decoding="async"></a>
         <a class="frame" href="./photos/XIsWsNQ7GNc.jpg" data-tags="nature" aria-label="Открыть: Солнечный свет сквозь крону тропических деревьев" aria-haspopup="dialog"><img src="./photos/XIsWsNQ7GNc.jpg" alt="Солнечный свет сквозь крону тропических деревьев" width="2246" height="1498" loading="lazy" decoding="async"></a>
       </div>
+      <section class="gallery-intro" aria-labelledby="gallery-heading">
+        <h2 id="gallery-heading">Фотографии Кипра, природы и котов</h2>
+        <p>Авторская галерея Екатерины Перовой: природа Кипра, морские пейзажи, коты и другие животные, портреты и фотографии из путешествий.</p>
+      </section>
     </div>
   </main>
   <dialog class="album" id="album" aria-label="Просмотр фотоальбома">
