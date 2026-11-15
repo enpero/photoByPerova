@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#e5f4fc">
-  <title>Photo by Perova</title>
+  <title>Photo by Ekaterina Perova</title>
   <meta name="description" content="Фотографии Катерины Перовой: животные, природа и люди. Авторская фотогалерея.">
   <link rel="canonical" href="https://enpero.github.io/photoByPerova/">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:site_name" content="Photo by Perova">
-  <meta property="og:title" content="Photo by Perova">
+  <meta property="og:site_name" content="Photo by Ekaterina Perova">
+  <meta property="og:title" content="Photo by Ekaterina Perova">
   <meta property="og:description" content="Животные, природа и люди в авторской фотогалерее.">
   <meta property="og:url" content="https://enpero.github.io/photoByPerova/">
   <meta property="og:image" content="https://enpero.github.io/photoByPerova/photos/instagram-DfaA3LsCNP_-01.jpg">
@@ -18,12 +18,12 @@
   <meta property="og:image:type" content="image/jpeg">
   <meta property="og:image:width" content="4096">
   <meta property="og:image:height" content="2731">
-  <meta property="og:image:alt" content="Дождь в саду и ветви деревьев — фотография из галереи Photo by Perova">
+  <meta property="og:image:alt" content="Дождь в саду и ветви деревьев — фотография из галереи Photo by Ekaterina Perova">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Photo by Perova">
+  <meta name="twitter:title" content="Photo by Ekaterina Perova">
   <meta name="twitter:description" content="Животные, природа и люди в авторской фотогалерее.">
   <meta name="twitter:image" content="https://enpero.github.io/photoByPerova/photos/instagram-DfaA3LsCNP_-01.jpg">
-  <meta name="twitter:image:alt" content="Дождь в саду и ветви деревьев — Photo by Perova">
+  <meta name="twitter:image:alt" content="Дождь в саду и ветви деревьев — Photo by Ekaterina Perova">
   <style>
     * { box-sizing: border-box; }
     html { min-height: 100%; background: #e5f4fc; }
@@ -326,11 +326,65 @@
       .album-next { top: calc(50% - 22px); bottom: auto; right: max(10px, env(safe-area-inset-right, 0px)); }
       .album-glass { --frame-padding: 8px; }
     }
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: clamp(22px, 3vw, 38px);
+      padding: 6px 2px clamp(18px, 2.5vw, 28px);
+      border-bottom: 1px solid #ffffffb8;
+    }
+    .site-title { margin: 0; min-width: 0; color: #315975; font-weight: 400; }
+    .site-title-prefix { display: block; margin-bottom: 4px; font: 400 13px/1.4 system-ui, sans-serif; letter-spacing: .08em; }
+    .site-title-name { font: 400 clamp(22px, 2.7vw, 36px)/1.2 Georgia, serif; }
+    .social-links { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .social-link {
+      display: grid;
+      place-items: center;
+      width: 46px;
+      height: 46px;
+      border: 1px solid #ffffffd9;
+      border-radius: 14px;
+      color: #426a85;
+      background: linear-gradient(135deg, #ffffff99, #cbe7f74d);
+      box-shadow: inset 0 1px 0 #ffffffd9, 0 4px 14px #557e9814;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+      transition: background .2s ease, box-shadow .2s ease;
+    }
+    .social-link:hover { background: #ffffffcf; box-shadow: 0 6px 20px #557e9830; }
+    .social-link:focus-visible { outline: 3px solid #5194c3; outline-offset: 4px; }
+    .social-link svg { width: 22px; height: 22px; }
+    @media (max-width: 767px) {
+      .site-header { gap: 12px; padding-top: 4px; margin-bottom: 18px; }
+      .site-title-prefix { font-size: 11px; letter-spacing: .04em; }
+      .site-title-name { font-size: 22px; }
+      .social-links { gap: 6px; }
+      .social-link { width: 44px; height: 44px; border-radius: 13px; }
+      .social-link svg { width: 20px; height: 20px; }
+    }
+    @media (max-width: 360px) { .site-title-name { font-size: 20px; } }
+    @media (prefers-reduced-motion: reduce) { .social-link { transition: none; } }
   </style>
 </head>
 <body>
   <main class="scene">
     <div class="glass">
+      <header class="site-header">
+        <h1 class="site-title"><span class="site-title-prefix">Photo by</span> <span class="site-title-name">Ekaterina Perova</span></h1>
+        <nav class="social-links" aria-label="Социальные сети">
+          <a class="social-link" href="https://www.instagram.com/qatyaperova/" target="_blank" rel="noopener noreferrer" aria-label="Instagram — qatyaperova (откроется в новой вкладке)" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a class="social-link" href="https://t.me/qatya" target="_blank" rel="noopener noreferrer" aria-label="Telegram — qatya (откроется в новой вкладке)" title="Telegram">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.7 3.5 2.9 10.4c-1.2.5-1.2 1.2-.2 1.5l4.6 1.5 1.8 5.5c.2.6.4.8.8.8.4 0 .6-.2.9-.5l2.3-2.2 4.7 3.4c.9.5 1.5.2 1.7-.9l3-14.3c.3-1.4-.5-2-1.8-1.7ZM8.1 13l10.3-6.5c.5-.3.9-.1.5.3l-8.5 7.7-.3 3.5L8.1 13Z"/></svg>
+          </a>
+          <a class="social-link" href="https://www.linkedin.com/in/enpero" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn — enpero (откроется в новой вкладке)" title="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.4 3.1a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4ZM3.5 9h3.8v12H3.5V9Zm6.2 0h3.6v1.6h.1c.5-.9 1.7-1.9 3.5-1.9 3.8 0 4.5 2.5 4.5 5.7V21h-3.8v-5.8c0-1.4 0-3.2-2-3.2s-2.2 1.5-2.2 3.1V21H9.7V9Z"/></svg>
+          </a>
+        </nav>
+      </header>
       <div class="gallery-toolbar">
         <div class="filters" role="group" aria-label="Разделы галереи">
           <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Все фото</button>
