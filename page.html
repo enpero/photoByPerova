@@ -185,11 +185,33 @@
       .album-prev { top: auto; bottom: 18px; left: calc(50% - 60px); }
       .album-next { top: auto; bottom: 18px; right: calc(50% - 60px); }
     }
+    [hidden] { display: none !important; }
+    .gallery-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: clamp(14px, 2vw, 24px); }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+    .filter-button, .shuffle-button {
+      min-height: 42px;
+      padding: 10px 17px;
+      border: 1px solid #ffffffc9;
+      border-radius: 13px;
+      background: #f3faff70;
+      color: #426a85;
+      font: 14px/1.4 system-ui, sans-serif;
+      cursor: pointer;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+    .filter-button:hover, .shuffle-button:hover { background: #ffffffb3; }
+    .filter-button[aria-pressed="true"] { background: #f9fdfff0; border-color: #94bdd8; color: #244e6a; box-shadow: inset 0 1px 0 #fff, 0 3px 12px #557e9820; }
+    .filter-button:focus-visible, .shuffle-button:focus-visible { outline: 3px solid #5194c3; outline-offset: 3px; }
+    .shuffle-button { display: inline-flex; align-items: center; gap: 8px; }
+    .shuffle-button svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; }
+    .shuffle-button:disabled { opacity: .45; cursor: default; }
+    .empty-gallery { padding: 55px 20px; margin: 0; text-align: center; color: #426a85; font: 15px/1.6 system-ui, sans-serif; }
     .view-switch {
       display: flex;
       justify-content: flex-end;
       gap: 6px;
-      margin-bottom: clamp(14px, 2vw, 24px);
+      margin-bottom: 0;
     }
     .view-button {
       display: grid;
@@ -238,37 +260,48 @@
 <body>
   <main class="scene">
     <div class="glass">
+      <div class="gallery-toolbar">
+        <div class="filters" role="group" aria-label="Категории фотографий">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Все фото</button>
+          <button class="filter-button" type="button" data-filter="animals" aria-pressed="false">Животные</button>
+          <button class="filter-button" type="button" data-filter="nature" aria-pressed="false">Природа</button>
+          <button class="filter-button" type="button" data-filter="people" aria-pressed="false">Люди</button>
+          <button class="filter-button" type="button" data-filter="buba" aria-pressed="false">Буба</button>
+        </div>
+        <button class="shuffle-button" id="shuffle" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h3c5 0 7 12 12 12h3M17 14l4 4-4 4M3 18h3c2 0 3-2 5-5m2-3c2-3 3-4 5-4h3M17 2l4 4-4 4"/></svg>Перемешать</button>
       <div class="view-switch" role="group" aria-label="Вид галереи">
         <button class="view-button" type="button" data-view="original" aria-label="Исходная раскладка" title="Исходная раскладка" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="11" rx="1"/><rect x="14" y="3" width="7" height="6" rx="1"/><rect x="3" y="18" width="7" height="3" rx="1"/><rect x="14" y="13" width="7" height="8" rx="1"/></svg></button>
         <button class="view-button" type="button" data-view="squares" aria-label="Квадратная сетка" title="Квадратная сетка" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></svg></button>
       </div>
+      </div>
+      <p class="empty-gallery" id="empty-gallery" role="status" hidden>В этой категории пока нет фотографий.</p>
       <div class="gallery" data-view="original">
-        <a class="frame" href="./photos/QAT_1365.jpeg" aria-label="Открыть фотографию 1" aria-haspopup="dialog"><img src="./photos/QAT_1365.jpeg" alt="Фотография 1" width="6048" height="4032" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1463.jpeg" aria-label="Открыть фотографию 2" aria-haspopup="dialog"><img src="./photos/QAT_1463.jpeg" alt="Фотография 2" width="4032" height="6048" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1468.JPG" aria-label="Открыть фотографию 3" aria-haspopup="dialog"><img src="./photos/QAT_1468.JPG" alt="Фотография 3" width="6048" height="4032" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1527.jpeg" aria-label="Открыть фотографию 4" aria-haspopup="dialog"><img src="./photos/QAT_1527.jpeg" alt="Фотография 4" width="2856" height="4288" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1646.jpeg" aria-label="Открыть фотографию 5" aria-haspopup="dialog"><img src="./photos/QAT_1646.jpeg" alt="Фотография 5" width="4032" height="6048" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1687.jpeg" aria-label="Открыть фотографию 6" aria-haspopup="dialog"><img src="./photos/QAT_1687.jpeg" alt="Фотография 6" width="2656" height="3984" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DdumBs5CF5J-01.jpg" aria-label="Открыть фотографию 7" aria-haspopup="dialog"><img src="./photos/instagram-DdumBs5CF5J-01.jpg" alt="Фотография 7" width="3072" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfaA3LsCNP_-01.jpg" aria-label="Открыть фотографию 8" aria-haspopup="dialog"><img src="./photos/instagram-DfaA3LsCNP_-01.jpg" alt="Фотография 8" width="4096" height="2731" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfaA3LsCNP_-02.jpg" aria-label="Открыть фотографию 9" aria-haspopup="dialog"><img src="./photos/instagram-DfaA3LsCNP_-02.jpg" alt="Фотография 9" width="4096" height="2731" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfaA3LsCNP_-03.jpg" aria-label="Открыть фотографию 10" aria-haspopup="dialog"><img src="./photos/instagram-DfaA3LsCNP_-03.jpg" alt="Фотография 10" width="4096" height="2731" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-01.jpg" aria-label="Открыть фотографию 11" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-01.jpg" alt="Фотография 11" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-02.jpg" aria-label="Открыть фотографию 12" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-02.jpg" alt="Фотография 12" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-03.jpg" aria-label="Открыть фотографию 13" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-03.jpg" alt="Фотография 13" width="2656" height="3984" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-04.jpg" aria-label="Открыть фотографию 14" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-04.jpg" alt="Фотография 14" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-05.jpg" aria-label="Открыть фотографию 15" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-05.jpg" alt="Фотография 15" width="2994" height="4032" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-06.jpg" aria-label="Открыть фотографию 16" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-06.jpg" alt="Фотография 16" width="4096" height="2731" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfpcqheiP7N-07.jpg" aria-label="Открыть фотографию 17" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-07.jpg" alt="Фотография 17" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-01.jpg" aria-label="Открыть фотографию 18" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-01.jpg" alt="Фотография 18" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-02.jpg" aria-label="Открыть фотографию 19" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-02.jpg" alt="Фотография 19" width="2844" height="3830" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-03.jpg" aria-label="Открыть фотографию 20" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-03.jpg" alt="Фотография 20" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-04.jpg" aria-label="Открыть фотографию 21" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-04.jpg" alt="Фотография 21" width="2656" height="3984" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-05.jpg" aria-label="Открыть фотографию 22" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-05.jpg" alt="Фотография 22" width="2040" height="2874" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-06.jpg" aria-label="Открыть фотографию 23" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-06.jpg" alt="Фотография 23" width="2651" height="2104" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-07.jpg" aria-label="Открыть фотографию 24" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-07.jpg" alt="Фотография 24" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-08.jpg" aria-label="Открыть фотографию 25" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-08.jpg" alt="Фотография 25" width="2731" height="4096" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-09.jpg" aria-label="Открыть фотографию 26" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-09.jpg" alt="Фотография 26" width="2656" height="3577" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1365.jpeg" data-tags="animals,buba" aria-label="Открыть фотографию 1" aria-haspopup="dialog"><img src="./photos/QAT_1365.jpeg" alt="Фотография 1" width="6048" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1463.jpeg" data-tags="animals,buba" aria-label="Открыть фотографию 2" aria-haspopup="dialog"><img src="./photos/QAT_1463.jpeg" alt="Фотография 2" width="4032" height="6048" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1468.JPG" data-tags="animals,buba" aria-label="Открыть фотографию 3" aria-haspopup="dialog"><img src="./photos/QAT_1468.JPG" alt="Фотография 3" width="6048" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1527.jpeg" data-tags="animals,buba" aria-label="Открыть фотографию 4" aria-haspopup="dialog"><img src="./photos/QAT_1527.jpeg" alt="Фотография 4" width="2856" height="4288" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1646.jpeg" data-tags="animals,buba" aria-label="Открыть фотографию 5" aria-haspopup="dialog"><img src="./photos/QAT_1646.jpeg" alt="Фотография 5" width="4032" height="6048" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1687.jpeg" data-tags="animals,buba" aria-label="Открыть фотографию 6" aria-haspopup="dialog"><img src="./photos/QAT_1687.jpeg" alt="Фотография 6" width="2656" height="3984" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DdumBs5CF5J-01.jpg" data-tags="nature" aria-label="Открыть фотографию 7" aria-haspopup="dialog"><img src="./photos/instagram-DdumBs5CF5J-01.jpg" alt="Фотография 7" width="3072" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfaA3LsCNP_-01.jpg" data-tags="nature" aria-label="Открыть фотографию 8" aria-haspopup="dialog"><img src="./photos/instagram-DfaA3LsCNP_-01.jpg" alt="Фотография 8" width="4096" height="2731" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfaA3LsCNP_-02.jpg" data-tags="nature" aria-label="Открыть фотографию 9" aria-haspopup="dialog"><img src="./photos/instagram-DfaA3LsCNP_-02.jpg" alt="Фотография 9" width="4096" height="2731" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfaA3LsCNP_-03.jpg" data-tags="nature" aria-label="Открыть фотографию 10" aria-haspopup="dialog"><img src="./photos/instagram-DfaA3LsCNP_-03.jpg" alt="Фотография 10" width="4096" height="2731" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-01.jpg" data-tags="animals" aria-label="Открыть фотографию 11" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-01.jpg" alt="Фотография 11" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-02.jpg" data-tags="animals" aria-label="Открыть фотографию 12" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-02.jpg" alt="Фотография 12" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-03.jpg" data-tags="animals" aria-label="Открыть фотографию 13" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-03.jpg" alt="Фотография 13" width="2656" height="3984" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-04.jpg" data-tags="animals" aria-label="Открыть фотографию 14" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-04.jpg" alt="Фотография 14" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-05.jpg" data-tags="animals" aria-label="Открыть фотографию 15" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-05.jpg" alt="Фотография 15" width="2994" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-06.jpg" data-tags="animals" aria-label="Открыть фотографию 16" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-06.jpg" alt="Фотография 16" width="4096" height="2731" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfpcqheiP7N-07.jpg" data-tags="animals" aria-label="Открыть фотографию 17" aria-haspopup="dialog"><img src="./photos/instagram-DfpcqheiP7N-07.jpg" alt="Фотография 17" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-01.jpg" data-tags="animals" aria-label="Открыть фотографию 18" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-01.jpg" alt="Фотография 18" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-02.jpg" data-tags="animals,nature" aria-label="Открыть фотографию 19" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-02.jpg" alt="Фотография 19" width="2844" height="3830" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-03.jpg" data-tags="animals" aria-label="Открыть фотографию 20" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-03.jpg" alt="Фотография 20" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-04.jpg" data-tags="nature" aria-label="Открыть фотографию 21" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-04.jpg" alt="Фотография 21" width="2656" height="3984" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-05.jpg" data-tags="animals,nature" aria-label="Открыть фотографию 22" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-05.jpg" alt="Фотография 22" width="2040" height="2874" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-06.jpg" data-tags="animals,nature" aria-label="Открыть фотографию 23" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-06.jpg" alt="Фотография 23" width="2651" height="2104" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-07.jpg" data-tags="animals" aria-label="Открыть фотографию 24" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-07.jpg" alt="Фотография 24" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-08.jpg" data-tags="animals" aria-label="Открыть фотографию 25" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-08.jpg" alt="Фотография 25" width="2731" height="4096" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/instagram-DfiF-lWCG3G-09.jpg" data-tags="" aria-label="Открыть фотографию 26" aria-haspopup="dialog"><img src="./photos/instagram-DfiF-lWCG3G-09.jpg" alt="Фотография 26" width="2656" height="3577" loading="lazy" decoding="async"></a>
       </div>
     </div>
   </main>
@@ -296,6 +329,55 @@
     setGalleryView(savedView);
     viewButtons.forEach(button => button.addEventListener('click', () => setGalleryView(button.dataset.view)));
     const frames = [...document.querySelectorAll('.frame')];
+    const filterButtons = [...document.querySelectorAll('.filter-button')];
+    const shuffleButton = document.getElementById('shuffle');
+    const emptyGallery = document.getElementById('empty-gallery');
+    const categoryKeys = ['animals', 'nature', 'people', 'buba'];
+    let selectedFilters = new Set();
+    let orderedFrames = [...frames];
+    let activeFrames = [...frames];
+    function toggleFilter(selected, key) {
+      if (key === 'all') return new Set();
+      const next = new Set(selected);
+      if (next.has(key)) next.delete(key); else next.add(key);
+      return next.size === categoryKeys.length ? new Set() : next;
+    }
+    function matchesFilters(tags, selected) {
+      return selected.size === 0 || tags.some(tag => selected.has(tag));
+    }
+    function shufflePhotos(list, random = Math.random) {
+      const result = [...list];
+      for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
+      }
+      // Every click with two or more photos visibly changes their order.
+      if (result.length > 1 && result.every((value, i) => value === list[i])) result.push(result.shift());
+      return result;
+    }
+    function applyFilters() {
+      activeFrames = orderedFrames.filter(frame => matchesFilters(frame.dataset.tags.split(','), selectedFilters));
+      const visible = new Set(activeFrames);
+      orderedFrames.forEach(frame => { frame.hidden = !visible.has(frame); });
+      filterButtons.forEach(button => button.setAttribute('aria-pressed', String(
+        button.dataset.filter === 'all' ? selectedFilters.size === 0 : selectedFilters.has(button.dataset.filter)
+      )));
+      emptyGallery.hidden = activeFrames.length !== 0;
+      shuffleButton.disabled = activeFrames.length < 2;
+    }
+    filterButtons.forEach(button => button.addEventListener('click', () => {
+      selectedFilters = toggleFilter(selectedFilters, button.dataset.filter);
+      applyFilters();
+    }));
+    shuffleButton.addEventListener('click', () => {
+      const visible = new Set(activeFrames);
+      const shuffled = shufflePhotos(activeFrames);
+      let next = 0;
+      orderedFrames = orderedFrames.map(frame => visible.has(frame) ? shuffled[next++] : frame);
+      gallery.append(...orderedFrames);
+      applyFilters();
+    });
+    applyFilters();
     const album = document.getElementById('album');
     const photo = document.getElementById('album-photo');
     const stage = document.getElementById('album-stage');
@@ -303,16 +385,17 @@
     let origin = null;
     let touchStart = null;
     function showPhoto(index) {
-      current = (index + frames.length) % frames.length;
-      const frame = frames[current];
+      if (!activeFrames.length) return;
+      current = (index + activeFrames.length) % activeFrames.length;
+      const frame = activeFrames[current];
       photo.src = frame.href;
       photo.alt = frame.querySelector('img').alt;
-      album.setAttribute('aria-label', 'Фотография ' + (current + 1) + ' из ' + frames.length);
+      album.setAttribute('aria-label', 'Фотография ' + (current + 1) + ' из ' + activeFrames.length);
     }
-    frames.forEach((frame, index) => frame.addEventListener('click', event => {
+    frames.forEach(frame => frame.addEventListener('click', event => {
       event.preventDefault();
       origin = frame;
-      showPhoto(index);
+      showPhoto(activeFrames.indexOf(frame));
       album.showModal();
       document.documentElement.classList.add('album-open');
     }));
