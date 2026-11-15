@@ -112,15 +112,33 @@
       padding: 65px 80px;
       touch-action: pan-y pinch-zoom;
     }
+    .album-glass {
+      --frame-padding: clamp(10px, 1.6vw, 24px);
+      padding: var(--frame-padding);
+      margin: 0;
+      max-width: 100%;
+      border: 1px solid #ffffffe0;
+      border-radius: clamp(18px, 2.4vw, 34px);
+      background: linear-gradient(135deg, #ffffff80, #b9dff747 48%, #effaff73);
+      -webkit-backdrop-filter: blur(30px) saturate(125%);
+      backdrop-filter: blur(30px) saturate(125%);
+      box-shadow:
+        inset 0 1px 0 #ffffff,
+        inset 1px 0 0 #ffffffa6,
+        inset 0 -1px 0 #93bdd366,
+        0 24px 80px #365b7733,
+        0 4px 18px #6d9ab521;
+    }
     .album-photo {
       display: block;
-      max-width: 100%;
-      max-height: calc(100dvh - 130px);
+      max-width: calc(100vw - 160px - 2 * var(--frame-padding) - 2px);
+      max-height: calc(100dvh - 130px - 2 * var(--frame-padding) - 2px);
       width: auto;
       height: auto;
       object-fit: contain;
       image-orientation: from-image;
-      box-shadow: 0 15px 70px #365b7730;
+      border-radius: clamp(8px, 1.2vw, 16px);
+      box-shadow: 0 2px 12px #365b771a;
     }
     .album-control {
       position: absolute;
@@ -146,7 +164,24 @@
     .album-next { top: calc(50% - 24px); right: 16px; }
     @media (max-width: 580px) {
       .album-stage { padding: 74px 12px 88px; }
-      .album-photo { max-height: calc(100dvh - 162px); }
+      .album-glass {
+      --frame-padding: clamp(10px, 1.6vw, 24px);
+      padding: var(--frame-padding);
+      margin: 0;
+      max-width: 100%;
+      border: 1px solid #ffffffe0;
+      border-radius: clamp(18px, 2.4vw, 34px);
+      background: linear-gradient(135deg, #ffffff80, #b9dff747 48%, #effaff73);
+      -webkit-backdrop-filter: blur(30px) saturate(125%);
+      backdrop-filter: blur(30px) saturate(125%);
+      box-shadow:
+        inset 0 1px 0 #ffffff,
+        inset 1px 0 0 #ffffffa6,
+        inset 0 -1px 0 #93bdd366,
+        0 24px 80px #365b7733,
+        0 4px 18px #6d9ab521;
+    }
+    .album-photo { max-height: calc(100dvh - 162px); }
       .album-prev { top: auto; bottom: 18px; left: calc(50% - 60px); }
       .album-next { top: auto; bottom: 18px; right: calc(50% - 60px); }
     }
@@ -167,7 +202,9 @@
   </main>
   <dialog class="album" id="album" aria-label="Просмотр фотоальбома">
     <div class="album-stage" id="album-stage">
-      <img class="album-photo" id="album-photo" alt="" draggable="false">
+      <figure class="album-glass">
+        <img class="album-photo" id="album-photo" alt="" draggable="false">
+      </figure>
     </div>
     <button class="album-control album-close" type="button" aria-label="Закрыть просмотр" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
     <button class="album-control album-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
