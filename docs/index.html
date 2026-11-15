@@ -261,7 +261,7 @@
   <main class="scene">
     <div class="glass">
       <div class="gallery-toolbar">
-        <div class="filters" role="group" aria-label="Категории фотографий">
+        <div class="filters" role="group" aria-label="Разделы галереи">
           <button class="filter-button" type="button" data-filter="all" aria-pressed="true">Все фото</button>
           <button class="filter-button" type="button" data-filter="animals" aria-pressed="false">Животные</button>
           <button class="filter-button" type="button" data-filter="nature" aria-pressed="false">Природа</button>
@@ -332,18 +332,11 @@
     const filterButtons = [...document.querySelectorAll('.filter-button')];
     const shuffleButton = document.getElementById('shuffle');
     const emptyGallery = document.getElementById('empty-gallery');
-    const categoryKeys = ['animals', 'nature', 'people', 'buba'];
-    let selectedFilters = new Set();
+    let selectedCategory = 'all';
     let orderedFrames = [...frames];
     let activeFrames = [...frames];
-    function toggleFilter(selected, key) {
-      if (key === 'all') return new Set();
-      const next = new Set(selected);
-      if (next.has(key)) next.delete(key); else next.add(key);
-      return next.size === categoryKeys.length ? new Set() : next;
-    }
-    function matchesFilters(tags, selected) {
-      return selected.size === 0 || tags.some(tag => selected.has(tag));
+    function matchesCategory(tags, category) {
+      return category === 'all' || tags.includes(category);
     }
     function shufflePhotos(list, random = Math.random) {
       const result = [...list];
@@ -356,17 +349,17 @@
       return result;
     }
     function applyFilters() {
-      activeFrames = orderedFrames.filter(frame => matchesFilters(frame.dataset.tags.split(','), selectedFilters));
+      activeFrames = orderedFrames.filter(frame => matchesCategory(frame.dataset.tags.split(','), selectedCategory));
       const visible = new Set(activeFrames);
       orderedFrames.forEach(frame => { frame.hidden = !visible.has(frame); });
       filterButtons.forEach(button => button.setAttribute('aria-pressed', String(
-        button.dataset.filter === 'all' ? selectedFilters.size === 0 : selectedFilters.has(button.dataset.filter)
+        button.dataset.filter === selectedCategory
       )));
       emptyGallery.hidden = activeFrames.length !== 0;
       shuffleButton.disabled = activeFrames.length < 2;
     }
     filterButtons.forEach(button => button.addEventListener('click', () => {
-      selectedFilters = toggleFilter(selectedFilters, button.dataset.filter);
+      selectedCategory = button.dataset.filter;
       applyFilters();
     }));
     shuffleButton.addEventListener('click', () => {
