@@ -6,7 +6,7 @@ const author = { '@type': 'Person', '@id': base + '#photographer', name: 'Ekater
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [author,
-    { '@type': 'WebSite', '@id': base + '#website', url: base, name: 'Moments by Ekaterina Perova', inLanguage: 'ru', creator: { '@id': author['@id'] } },
+    { '@type': 'WebSite', '@id': base + '#website', url: base, name: 'Photo Gallery by Ekaterina Perova', inLanguage: 'ru', creator: { '@id': author['@id'] } },
     { '@type': 'ImageGallery', '@id': base + '#gallery', url: base,
       name: 'Фотографии Кипра, природы и котов',
       description: 'Авторская фотогалерея Екатерины Перовой: природа Кипра, коты, пейзажи и портреты.',
