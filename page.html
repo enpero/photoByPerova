@@ -365,32 +365,7 @@
     @container page (max-width: 360px) { .site-title-name { font-size: 20px; } }
     @media (prefers-reduced-motion: reduce) { .social-link { transition: none; } }
     body { container-name: page; container-type: inline-size; }
-    html[data-device="mobile"] body { width: min(100%, 460px); margin-inline: auto; }
-    html[data-device="desktop"] body { min-width: 1100px; }
-    html[data-device="desktop"], html[data-device="desktop"] body { overflow-x: auto; }
-    .device-toggle {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 44px;
-      padding: 10px 14px;
-      border: 1px solid #ffffffc9;
-      border-radius: 13px;
-      background: #f3faff80;
-      color: #426a85;
-      font: 13px/1.4 system-ui, sans-serif;
-      cursor: pointer;
-      touch-action: manipulation;
-    }
-    .device-switch { display: inline-flex; gap: 4px; padding: 4px; border: 1px solid #ffffffc9; border-radius: 16px; background: #d6edfa66; }
-    .device-toggle { width: 44px; padding: 10px; border-color: transparent; background: transparent; border-radius: 11px; }
-    .device-toggle[aria-pressed="true"] { background: #f9fdffed; border-color: #b4d4e8; box-shadow: 0 3px 12px #557e9820; }
-    .device-toggle:hover { background: #ffffffcf; }
-    .device-toggle:focus-visible { outline: 3px solid #5194c3; outline-offset: 3px; }
-    .device-toggle svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; }
     .header-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
-    .header-actions .device-switch { padding: 2px; gap: 2px; border-radius: 14px; }
     @container page (max-width: 767px) {
       .site-header { align-items: flex-start; }
       .header-actions { flex-direction: column-reverse; align-items: flex-end; gap: 8px; }
@@ -414,10 +389,6 @@
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5.4 3.1a2.2 2.2 0 1 0 0 4.4 2.2 2.2 0 0 0 0-4.4ZM3.5 9h3.8v12H3.5V9Zm6.2 0h3.6v1.6h.1c.5-.9 1.7-1.9 3.5-1.9 3.8 0 4.5 2.5 4.5 5.7V21h-3.8v-5.8c0-1.4 0-3.2-2-3.2s-2.2 1.5-2.2 3.1V21H9.7V9Z"/></svg>
           </a>
         </nav>
-        <div class="device-switch" role="group" aria-label="Версия сайта">
-          <button class="device-toggle" data-device-view="desktop" type="button" aria-label="Версия для компьютера" aria-pressed="false" title="Версия для компьютера"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
-          <button class="device-toggle" data-device-view="mobile" type="button" aria-label="Мобильная версия" aria-pressed="false" title="Мобильная версия"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10 18h4"/></svg></button>
-        </div>
         </div>
       </header>
       <div class="gallery-toolbar">
@@ -499,33 +470,8 @@
     <button class="album-control album-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
   </dialog>
   <script>
-    (() => {
-      const root = document.documentElement;
-      const viewport = document.querySelector('meta[name="viewport"]');
-      const deviceButtons = [...document.querySelectorAll('[data-device-view]')];
-      const narrowScreen = window.matchMedia('(max-width: 767px)');
-      const normalViewport = 'width=device-width, initial-scale=1, viewport-fit=cover';
-      let mode = null;
-      try {
-        const saved = localStorage.getItem('perova-device-view');
-        if (saved === 'mobile' || saved === 'desktop') mode = saved;
-      } catch {}
-      function updateDevice() {
-        if (mode) root.dataset.device = mode;
-        else delete root.dataset.device;
-        viewport.setAttribute('content', mode === 'desktop'
-          ? 'width=1100, viewport-fit=cover' : normalViewport);
-        const mobile = mode ? mode === 'mobile' : narrowScreen.matches;
-        deviceButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.deviceView === (mobile ? 'mobile' : 'desktop'))));
-      }
-      deviceButtons.forEach(button => button.addEventListener('click', () => {
-        mode = button.dataset.deviceView;
-        try { localStorage.setItem('perova-device-view', mode); } catch {}
-        updateDevice();
-      }));
-      narrowScreen.addEventListener('change', () => { if (!mode) updateDevice(); });
-      updateDevice();
-    })();
+    // Retire the saved manual layout choice; responsive CSS follows the screen.
+    try { localStorage.removeItem('perova-device-view'); } catch {}
   </script>
   <script>
     const gallery = document.querySelector('.gallery');
