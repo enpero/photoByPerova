@@ -87,20 +87,146 @@
     @media (max-width: 1000px) { .gallery { columns: 2; } }
     @media (max-width: 580px) { .gallery { columns: 1; } .frame { border-radius: 14px; } }
     @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
+    html.album-open { overflow: hidden; }
+    .album {
+      width: 100vw;
+      height: 100dvh;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: #e4f2fbf0;
+      color: #315975;
+      overflow: hidden;
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      overscroll-behavior: contain;
+    }
+    .album::backdrop { background: #b4d5e7a6; }
+    .album-stage {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      padding: 65px 80px;
+      touch-action: pan-y pinch-zoom;
+    }
+    .album-photo {
+      display: block;
+      max-width: 100%;
+      max-height: calc(100dvh - 130px);
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      image-orientation: from-image;
+      box-shadow: 0 15px 70px #365b7730;
+    }
+    .album-control {
+      position: absolute;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border: 1px solid #ffffffd9;
+      border-radius: 50%;
+      background: #f5fbffb8;
+      color: #315975;
+      cursor: pointer;
+      -webkit-backdrop-filter: blur(18px);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 4px 20px #365b771a;
+    }
+    .album-control:hover { background: #ffffffed; }
+    .album-control:focus-visible { outline: 3px solid #5194c3; outline-offset: 4px; }
+    .album-control svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; }
+    .album-close { top: 16px; right: 18px; }
+    .album-prev { top: calc(50% - 24px); left: 16px; }
+    .album-next { top: calc(50% - 24px); right: 16px; }
+    @media (max-width: 580px) {
+      .album-stage { padding: 74px 12px 88px; }
+      .album-photo { max-height: calc(100dvh - 162px); }
+      .album-prev { top: auto; bottom: 18px; left: calc(50% - 60px); }
+      .album-next { top: auto; bottom: 18px; right: calc(50% - 60px); }
+    }
   </style>
 </head>
 <body>
   <main class="scene">
     <div class="glass">
       <div class="gallery">
-        <a class="frame" href="./photos/QAT_1365.jpeg" download="QAT_1365.jpeg" aria-label="Скачать фотографию 1 в исходном качестве"><img src="./photos/QAT_1365.jpeg" alt="Фотография 1" width="6048" height="4032" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1463.jpeg" download="QAT_1463.jpeg" aria-label="Скачать фотографию 2 в исходном качестве"><img src="./photos/QAT_1463.jpeg" alt="Фотография 2" width="4032" height="6048" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1468.JPG" download="QAT_1468.JPG" aria-label="Скачать фотографию 3 в исходном качестве"><img src="./photos/QAT_1468.JPG" alt="Фотография 3" width="6048" height="4032" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1527.jpeg" download="QAT_1527.jpeg" aria-label="Скачать фотографию 4 в исходном качестве"><img src="./photos/QAT_1527.jpeg" alt="Фотография 4" width="2856" height="4288" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1646.jpeg" download="QAT_1646.jpeg" aria-label="Скачать фотографию 5 в исходном качестве"><img src="./photos/QAT_1646.jpeg" alt="Фотография 5" width="4032" height="6048" loading="lazy" decoding="async"></a>
-        <a class="frame" href="./photos/QAT_1687.jpeg" download="QAT_1687.jpeg" aria-label="Скачать фотографию 6 в исходном качестве"><img src="./photos/QAT_1687.jpeg" alt="Фотография 6" width="2656" height="3984" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1365.jpeg" aria-label="Открыть фотографию 1" aria-haspopup="dialog"><img src="./photos/QAT_1365.jpeg" alt="Фотография 1" width="6048" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1463.jpeg" aria-label="Открыть фотографию 2" aria-haspopup="dialog"><img src="./photos/QAT_1463.jpeg" alt="Фотография 2" width="4032" height="6048" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1468.JPG" aria-label="Открыть фотографию 3" aria-haspopup="dialog"><img src="./photos/QAT_1468.JPG" alt="Фотография 3" width="6048" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1527.jpeg" aria-label="Открыть фотографию 4" aria-haspopup="dialog"><img src="./photos/QAT_1527.jpeg" alt="Фотография 4" width="2856" height="4288" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1646.jpeg" aria-label="Открыть фотографию 5" aria-haspopup="dialog"><img src="./photos/QAT_1646.jpeg" alt="Фотография 5" width="4032" height="6048" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1687.jpeg" aria-label="Открыть фотографию 6" aria-haspopup="dialog"><img src="./photos/QAT_1687.jpeg" alt="Фотография 6" width="2656" height="3984" loading="lazy" decoding="async"></a>
       </div>
     </div>
   </main>
+  <dialog class="album" id="album" aria-label="Просмотр фотоальбома">
+    <div class="album-stage" id="album-stage">
+      <img class="album-photo" id="album-photo" alt="" draggable="false">
+    </div>
+    <button class="album-control album-close" type="button" aria-label="Закрыть просмотр" autofocus><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
+    <button class="album-control album-prev" type="button" aria-label="Предыдущее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7"/></svg></button>
+    <button class="album-control album-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
+  </dialog>
+  <script>
+    const frames = [...document.querySelectorAll('.frame')];
+    const album = document.getElementById('album');
+    const photo = document.getElementById('album-photo');
+    const stage = document.getElementById('album-stage');
+    let current = 0;
+    let origin = null;
+    let touchStart = null;
+    function showPhoto(index) {
+      current = (index + frames.length) % frames.length;
+      const frame = frames[current];
+      photo.src = frame.href;
+      photo.alt = frame.querySelector('img').alt;
+      album.setAttribute('aria-label', 'Фотография ' + (current + 1) + ' из ' + frames.length);
+    }
+    frames.forEach((frame, index) => frame.addEventListener('click', event => {
+      event.preventDefault();
+      origin = frame;
+      showPhoto(index);
+      album.showModal();
+      document.documentElement.classList.add('album-open');
+    }));
+    album.querySelector('.album-close').addEventListener('click', () => album.close());
+    album.querySelector('.album-prev').addEventListener('click', () => showPhoto(current - 1));
+    album.querySelector('.album-next').addEventListener('click', () => showPhoto(current + 1));
+    album.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        showPhoto(current + (event.key === 'ArrowRight' ? 1 : -1));
+      }
+    });
+    album.addEventListener('close', () => {
+      document.documentElement.classList.remove('album-open');
+      touchStart = null;
+      if (origin) origin.focus({ preventScroll: true });
+    });
+    stage.addEventListener('click', event => {
+      if (event.target === stage) album.close();
+    });
+    stage.addEventListener('touchstart', event => {
+      touchStart = event.touches.length === 1
+        ? { x: event.touches[0].clientX, y: event.touches[0].clientY }
+        : null;
+    }, { passive: true });
+    stage.addEventListener('touchend', event => {
+      if (!touchStart || event.touches.length || !event.changedTouches.length) return;
+      const dx = event.changedTouches[0].clientX - touchStart.x;
+      const dy = event.changedTouches[0].clientY - touchStart.y;
+      touchStart = null;
+      if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+        showPhoto(current + (dx < 0 ? 1 : -1));
+      }
+    }, { passive: true });
+    stage.addEventListener('touchcancel', () => { touchStart = null; }, { passive: true });
+  </script>
 </body>
 </html>
