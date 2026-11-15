@@ -6,12 +6,12 @@ const author = { '@type': 'Person', '@id': base + '#photographer', name: 'Ekater
 const schema = {
   '@context': 'https://schema.org',
   '@graph': [author,
-    { '@type': 'WebSite', '@id': base + '#website', url: base, name: 'Photo by Ekaterina Perova', inLanguage: 'ru', creator: { '@id': author['@id'] } },
+    { '@type': 'WebSite', '@id': base + '#website', url: base, name: 'Фотограф на Кипре Перова Екатерина', inLanguage: 'ru', creator: { '@id': author['@id'] } },
     { '@type': 'ImageGallery', '@id': base + '#gallery', url: base,
       name: 'Фотографии Кипра, природы и котов',
       description: 'Авторская фотогалерея Екатерины Перовой: природа Кипра, коты, пейзажи и портреты.',
       inLanguage: 'ru', isPartOf: { '@id': base + '#website' }, creator: { '@id': author['@id'] },
-      image: photos.map(photo => ({ '@type': 'ImageObject', '@id': base + '#photo-' + encodeURIComponent(photo.id), contentUrl: new URL(photo.url, base).href, name: photo.title || 'Фотография из галереи Екатерины Перовой', creator: { '@id': author['@id'] }, creditText: 'Photo by Ekaterina Perova' })) }
+      image: photos.map(photo => ({ '@type': 'ImageObject', '@id': base + '#photo-' + encodeURIComponent(photo.id), contentUrl: new URL(photo.url, base).href, name: photo.title || 'Фотография из галереи Екатерины Перовой', creator: { '@id': author['@id'] }, creditText: 'Перова Екатерина' })) }
   ]
 };
 const json = JSON.stringify(schema).replace(/</g, '\\u003c');

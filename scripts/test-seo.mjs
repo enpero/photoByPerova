@@ -3,7 +3,7 @@ import { readFile } from 'node:fs/promises';
 const html = await readFile('docs/index.html', 'utf8');
 const photos = JSON.parse(await readFile('docs/photos.json', 'utf8'));
 const base = 'https://enpero.github.io/photoByPerova/';
-assert.match(html, /<title>Фото Кипра, природы и котов — Екатерина Перова<\/title>/);
+assert.match(html, /<title>Фотограф на Кипре Перова Екатерина<\/title>/);
 assert.equal((html.match(/<h1\b/g) || []).length, 1);
 assert.match(html, /<link rel="canonical" href="https:\/\/enpero.github.io\/photoByPerova\/">/);
 assert.match(html, /name="robots" content="index, follow, max-image-preview:large"/);
