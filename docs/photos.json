@@ -522,5 +522,25 @@
     "tags": [
       "people"
     ]
+  },
+  {
+    "id": "71B6DC4A-9AD4-4B3C-BCFB-E513EEF726B5",
+    "url": "./photos/71B6DC4A-9AD4-4B3C-BCFB-E513EEF726B5.png",
+    "size": 1688250,
+    "width": 1086,
+    "height": 1448,
+    "tags": [
+      "nature"
+    ]
+  },
+  {
+    "id": "IMG_4788",
+    "url": "./photos/IMG_4788.jpeg",
+    "size": 1338327,
+    "width": 3024,
+    "height": 4032,
+    "tags": [
+      "nature"
+    ]
   }
 ]
