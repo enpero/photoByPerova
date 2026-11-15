@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#e5f4fc">
   <title>Photo by Perova</title>
   <meta name="description" content="Фотографии Катерины Перовой: животные, природа и люди. Авторская фотогалерея.">
@@ -108,6 +108,10 @@
     @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
     html.album-open { overflow: hidden; }
     .album {
+      --stage-top: max(66px, calc(env(safe-area-inset-top, 0px) + 54px));
+      --stage-bottom: max(32px, env(safe-area-inset-bottom, 0px));
+      --stage-left: max(80px, env(safe-area-inset-left, 0px));
+      --stage-right: max(80px, env(safe-area-inset-right, 0px));
       width: 100vw;
       height: 100dvh;
       max-width: none;
@@ -128,7 +132,7 @@
       height: 100%;
       display: grid;
       place-items: center;
-      padding: 65px 80px;
+      padding: var(--stage-top) var(--stage-right) var(--stage-bottom) var(--stage-left);
       touch-action: pan-y pinch-zoom;
     }
     .album-glass {
@@ -150,8 +154,8 @@
     }
     .album-photo {
       display: block;
-      max-width: calc(100vw - 160px - 2 * var(--frame-padding) - 2px);
-      max-height: calc(100dvh - 130px - 2 * var(--frame-padding) - 2px);
+      max-width: calc(100vw - var(--stage-left) - var(--stage-right) - 2 * var(--frame-padding) - 2px);
+      max-height: calc(100dvh - var(--stage-top) - var(--stage-bottom) - 2 * var(--frame-padding) - 2px);
       width: auto;
       height: auto;
       object-fit: contain;
@@ -178,37 +182,14 @@
     .album-control:hover { background: #ffffffed; }
     .album-control:focus-visible { outline: 3px solid #5194c3; outline-offset: 4px; }
     .album-control svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; }
-    .album-close { top: 16px; right: 18px; }
+    .album-close { top: max(12px, env(safe-area-inset-top, 0px)); right: max(14px, env(safe-area-inset-right, 0px)); }
     .album-prev { top: calc(50% - 24px); left: 16px; }
     .album-next { top: calc(50% - 24px); right: 16px; }
-    @media (max-width: 580px) {
-      .album-stage { padding: 74px 12px 88px; }
-      .album-glass {
-      --frame-padding: clamp(10px, 1.6vw, 24px);
-      padding: var(--frame-padding);
-      margin: 0;
-      max-width: 100%;
-      border: 1px solid #ffffffe0;
-      border-radius: clamp(18px, 2.4vw, 34px);
-      background: linear-gradient(135deg, #ffffff80, #b9dff747 48%, #effaff73);
-      -webkit-backdrop-filter: blur(30px) saturate(125%);
-      backdrop-filter: blur(30px) saturate(125%);
-      box-shadow:
-        inset 0 1px 0 #ffffff,
-        inset 1px 0 0 #ffffffa6,
-        inset 0 -1px 0 #93bdd366,
-        0 24px 80px #365b7733,
-        0 4px 18px #6d9ab521;
-    }
-    .album-photo { max-height: calc(100dvh - 162px); }
-      .album-prev { top: auto; bottom: 18px; left: calc(50% - 60px); }
-      .album-next { top: auto; bottom: 18px; right: calc(50% - 60px); }
-    }
     [hidden] { display: none !important; }
     .gallery-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: clamp(14px, 2vw, 24px); }
     .filters { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
     .filter-button, .shuffle-button {
-      min-height: 42px;
+      min-height: 44px;
       padding: 10px 17px;
       border: 1px solid #ffffffc9;
       border-radius: 13px;
@@ -235,8 +216,8 @@
     .view-button {
       display: grid;
       place-items: center;
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       padding: 10px;
       border: 1px solid #ffffffc9;
       border-radius: 12px;
@@ -273,6 +254,76 @@
     }
     @media (max-width: 580px) {
       .gallery[data-view="squares"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    /* Responsive shell: phones, tablets and laptop screens. */
+    html { -webkit-text-size-adjust: 100%; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { touch-action: manipulation; }
+    .scene { padding: clamp(12px, 3vw, 48px); }
+    .glass { min-width: 0; max-width: 1800px; min-height: calc(100svh - clamp(24px, 6vw, 96px)); padding: clamp(12px, 2vw, 28px); }
+    .gallery-toolbar, .filters, .gallery, .view-switch { min-width: 0; }
+    .filter-button, .shuffle-button { white-space: nowrap; flex-shrink: 0; }
+    .view-switch { flex-shrink: 0; }
+    .gallery { column-gap: 20px; }
+    .frame { margin-bottom: 20px; }
+    .album-stage { min-width: 0; min-height: 0; }
+    .album-control { z-index: 1; }
+    @media (min-width: 1024px) {
+      .gallery { columns: 3; }
+      .gallery[data-view="squares"] { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .gallery { columns: 2; }
+      .gallery[data-view="squares"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 900px) {
+      .gallery-toolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; }
+      .filters { grid-column: 1 / -1; }
+      .shuffle-button { justify-self: start; }
+    }
+    @media (max-width: 767px) {
+      .scene {
+        padding: max(10px, env(safe-area-inset-top, 0px)) max(10px, env(safe-area-inset-right, 0px)) max(10px, env(safe-area-inset-bottom, 0px)) max(10px, env(safe-area-inset-left, 0px));
+      }
+      .glass { padding: 12px; border-radius: 24px; min-height: calc(100svh - 20px); }
+      .gallery-toolbar { margin-bottom: 16px; }
+      .filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding: 3px 3px 8px;
+        gap: 6px;
+        scrollbar-width: thin;
+        scrollbar-color: #a8cada transparent;
+        scroll-padding-inline: 3px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .filter-button { padding: 10px 14px; }
+      .gallery { columns: 1; column-gap: 12px; }
+      .gallery[data-view="squares"] { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+      .frame { margin-bottom: 12px; border-radius: 14px; }
+      .gallery[data-view="squares"] .frame { border-radius: 9px; }
+      .album {
+        --stage-top: max(66px, calc(env(safe-area-inset-top, 0px) + 54px));
+        --stage-bottom: calc(82px + env(safe-area-inset-bottom, 0px));
+        --stage-left: max(10px, env(safe-area-inset-left, 0px));
+        --stage-right: max(10px, env(safe-area-inset-right, 0px));
+      }
+      .album-glass { --frame-padding: 9px; border-radius: 20px; }
+      .album-photo { border-radius: 11px; }
+      .album-prev { top: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); left: calc(50% - 58px); }
+      .album-next { top: auto; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); right: calc(50% - 58px); }
+    }
+    @media (max-height: 500px) and (orientation: landscape) {
+      .album {
+        --stage-top: max(12px, env(safe-area-inset-top, 0px));
+        --stage-bottom: max(12px, env(safe-area-inset-bottom, 0px));
+        --stage-left: max(72px, calc(env(safe-area-inset-left, 0px) + 56px));
+        --stage-right: max(72px, calc(env(safe-area-inset-right, 0px) + 56px));
+      }
+      .album-control { width: 44px; height: 44px; }
+      .album-prev { top: calc(50% - 22px); bottom: auto; left: max(10px, env(safe-area-inset-left, 0px)); }
+      .album-next { top: calc(50% - 22px); bottom: auto; right: max(10px, env(safe-area-inset-right, 0px)); }
+      .album-glass { --frame-padding: 8px; }
     }
   </style>
 </head>
