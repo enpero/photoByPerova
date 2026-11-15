@@ -185,12 +185,64 @@
       .album-prev { top: auto; bottom: 18px; left: calc(50% - 60px); }
       .album-next { top: auto; bottom: 18px; right: calc(50% - 60px); }
     }
+    .view-switch {
+      display: flex;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-bottom: clamp(14px, 2vw, 24px);
+    }
+    .view-button {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      padding: 10px;
+      border: 1px solid #ffffffc9;
+      border-radius: 12px;
+      background: #f3faff4d;
+      color: #688ba3;
+      cursor: pointer;
+      -webkit-backdrop-filter: blur(16px);
+      backdrop-filter: blur(16px);
+    }
+    .view-button:hover { background: #ffffffa6; }
+    .view-button[aria-pressed="true"] {
+      background: #f9fdffcf;
+      color: #315975;
+      box-shadow: inset 0 1px 0 #fff, 0 3px 12px #557e981a;
+      border-color: #b4d4e8;
+    }
+    .view-button:focus-visible { outline: 3px solid #5194c3; outline-offset: 3px; }
+    .view-button svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+    .gallery[data-view="squares"] {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: clamp(8px, 1.1vw, 16px);
+      columns: auto;
+    }
+    .gallery[data-view="squares"] .frame {
+      margin: 0;
+      aspect-ratio: 1;
+      min-width: 0;
+      border-radius: clamp(8px, 1.2vw, 16px);
+    }
+    .gallery[data-view="squares"] .frame img { width: 100%; height: 100%; object-fit: cover; }
+    @media (max-width: 1000px) {
+      .gallery[data-view="squares"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    }
+    @media (max-width: 580px) {
+      .gallery[data-view="squares"] { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
   </style>
 </head>
 <body>
   <main class="scene">
     <div class="glass">
-      <div class="gallery">
+      <div class="view-switch" role="group" aria-label="Вид галереи">
+        <button class="view-button" type="button" data-view="original" aria-label="Исходная раскладка" title="Исходная раскладка" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="11" rx="1"/><rect x="14" y="3" width="7" height="6" rx="1"/><rect x="3" y="18" width="7" height="3" rx="1"/><rect x="14" y="13" width="7" height="8" rx="1"/></svg></button>
+        <button class="view-button" type="button" data-view="squares" aria-label="Квадратная сетка" title="Квадратная сетка" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="6" height="6" rx="1"/><rect x="15" y="3" width="6" height="6" rx="1"/><rect x="3" y="15" width="6" height="6" rx="1"/><rect x="15" y="15" width="6" height="6" rx="1"/></svg></button>
+      </div>
+      <div class="gallery" data-view="original">
         <a class="frame" href="./photos/QAT_1365.jpeg" aria-label="Открыть фотографию 1" aria-haspopup="dialog"><img src="./photos/QAT_1365.jpeg" alt="Фотография 1" width="6048" height="4032" loading="lazy" decoding="async"></a>
         <a class="frame" href="./photos/QAT_1463.jpeg" aria-label="Открыть фотографию 2" aria-haspopup="dialog"><img src="./photos/QAT_1463.jpeg" alt="Фотография 2" width="4032" height="6048" loading="lazy" decoding="async"></a>
         <a class="frame" href="./photos/QAT_1468.JPG" aria-label="Открыть фотографию 3" aria-haspopup="dialog"><img src="./photos/QAT_1468.JPG" alt="Фотография 3" width="6048" height="4032" loading="lazy" decoding="async"></a>
@@ -211,6 +263,18 @@
     <button class="album-control album-next" type="button" aria-label="Следующее фото"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7"/></svg></button>
   </dialog>
   <script>
+    const gallery = document.querySelector('.gallery');
+    const viewButtons = [...document.querySelectorAll('.view-button')];
+    function setGalleryView(view) {
+      const selected = view === 'squares' ? 'squares' : 'original';
+      gallery.dataset.view = selected;
+      viewButtons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.view === selected)));
+      try { localStorage.setItem('perova-gallery-view', selected); } catch {}
+    }
+    let savedView = 'original';
+    try { savedView = localStorage.getItem('perova-gallery-view') || 'original'; } catch {}
+    setGalleryView(savedView);
+    viewButtons.forEach(button => button.addEventListener('click', () => setGalleryView(button.dataset.view)));
     const frames = [...document.querySelectorAll('.frame')];
     const album = document.getElementById('album');
     const photo = document.getElementById('album-photo');
