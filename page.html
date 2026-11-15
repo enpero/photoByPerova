@@ -386,6 +386,9 @@
     .gallery-intro h2 { margin: 0 0 8px; font: 400 clamp(19px, 2.3cqw, 25px)/1.35 Georgia, serif; color: #315975; }
     .gallery-intro p { margin: 0; font: 14px/1.8 system-ui, sans-serif; }
     @container page (max-width: 767px) { .gallery-intro { margin-top: 20px; padding-top: 18px; } .gallery-intro p { font-size: 13px; } }
+    .site-footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 20px; margin-top: 24px; padding-top: 18px; border-top: 1px solid #ffffffb8; color: #426a85; font: 12px/1.7 system-ui, sans-serif; }
+    .site-footer a { color: inherit; text-underline-offset: 4px; }
+    .site-footer a:focus-visible { outline: 3px solid #5194c3; outline-offset: 4px; }
   </style>
 </head>
 <body>
@@ -497,6 +500,7 @@
         <h2 id="gallery-heading">Фотографии Кипра, природы и котов</h2>
         <p>Авторская галерея Екатерины Перовой: природа Кипра, морские пейзажи, коты и другие животные, портреты и фотографии из путешествий.</p>
       </section>
+      <footer class="site-footer"><span>© Екатерина Перова</span><a href="./rights.html">Условия использования фотографий</a></footer>
     </div>
   </main>
   <dialog class="album" id="album" aria-label="Просмотр фотоальбома">

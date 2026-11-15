@@ -11,6 +11,15 @@ assert(!html.includes('noindex'));
 const schema = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
 const gallery = schema['@graph'].find(node => node['@type'] === 'ImageGallery');
 assert.equal(gallery.image.length, photos.length);
+const rights = await readFile('docs/rights.html', 'utf8');
+assert(rights.includes('id="terms"') && rights.includes('id="permission"'));
+assert(rights.includes('https://t.me/qatya') && rights.includes('https://www.instagram.com/qatyaperova/'));
+for (const image of gallery.image) {
+  assert(image.copyrightNotice.includes('Екатерина Перова'));
+  assert.equal(image.license, base + 'rights.html#terms');
+  assert.equal(image.acquireLicensePage, base + 'rights.html#permission');
+}
+assert(html.includes('href="./rights.html"'));
 const cards = [...html.matchAll(/<a class="frame" href="([^"]+)"[^>]*><img[^>]*alt="([^"]+)"/g)];
 assert.equal(cards.length, photos.length);
 for (const [, path, alt] of cards) {
