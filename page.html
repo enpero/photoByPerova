@@ -68,9 +68,39 @@
       .scene::before { width: 95vw; top: -5%; right: -40%; }
       .scene::after { width: 90vw; bottom: -10%; left: -40%; }
     }
+    .glass { padding: clamp(12px, 2.5vw, 36px); }
+    .gallery { columns: 3; column-gap: clamp(12px, 2vw, 28px); }
+    .frame {
+      display: block;
+      break-inside: avoid;
+      margin: 0 0 clamp(12px, 2vw, 28px);
+      border: 1px solid #ffffffb8;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #eef9ff52;
+      box-shadow: 0 8px 25px #557e9820;
+      transition: box-shadow .2s ease;
+    }
+    .frame:hover { box-shadow: 0 12px 35px #557e9840; }
+    .frame:focus-visible { outline: 3px solid #5194c3; outline-offset: 5px; }
+    .frame img { display: block; width: 100%; height: auto; image-orientation: from-image; }
+    @media (max-width: 1000px) { .gallery { columns: 2; } }
+    @media (max-width: 580px) { .gallery { columns: 1; } .frame { border-radius: 14px; } }
+    @media (prefers-reduced-motion: reduce) { .frame { transition: none; } }
   </style>
 </head>
 <body>
-  <div class="scene" aria-hidden="true"><div class="glass"></div></div>
+  <main class="scene">
+    <div class="glass">
+      <div class="gallery">
+        <a class="frame" href="./photos/QAT_1365.jpeg" download="QAT_1365.jpeg" aria-label="Скачать фотографию 1 в исходном качестве"><img src="./photos/QAT_1365.jpeg" alt="Фотография 1" width="6048" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1463.jpeg" download="QAT_1463.jpeg" aria-label="Скачать фотографию 2 в исходном качестве"><img src="./photos/QAT_1463.jpeg" alt="Фотография 2" width="4032" height="6048" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1468.JPG" download="QAT_1468.JPG" aria-label="Скачать фотографию 3 в исходном качестве"><img src="./photos/QAT_1468.JPG" alt="Фотография 3" width="6048" height="4032" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1527.jpeg" download="QAT_1527.jpeg" aria-label="Скачать фотографию 4 в исходном качестве"><img src="./photos/QAT_1527.jpeg" alt="Фотография 4" width="2856" height="4288" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1646.jpeg" download="QAT_1646.jpeg" aria-label="Скачать фотографию 5 в исходном качестве"><img src="./photos/QAT_1646.jpeg" alt="Фотография 5" width="4032" height="6048" loading="lazy" decoding="async"></a>
+        <a class="frame" href="./photos/QAT_1687.jpeg" download="QAT_1687.jpeg" aria-label="Скачать фотографию 6 в исходном качестве"><img src="./photos/QAT_1687.jpeg" alt="Фотография 6" width="2656" height="3984" loading="lazy" decoding="async"></a>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
