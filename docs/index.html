@@ -367,8 +367,12 @@
     body { container-name: page; container-type: inline-size; }
     .header-actions { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
     @container page (max-width: 767px) {
-      .site-header { align-items: flex-start; }
-      .header-actions { flex-direction: column-reverse; align-items: flex-end; gap: 8px; }
+      .site-header { flex-direction: column; align-items: stretch; gap: 14px; }
+      .site-title-name { font-size: clamp(25px, 6.5cqw, 32px); }
+      .header-actions { align-self: flex-start; flex-direction: row; align-items: center; gap: 8px; }
+      .social-links { gap: 8px; }
+      .social-link { border-radius: 12px; }
+      .social-link svg { width: 18px; height: 18px; }
     }
   </style>
 </head>
